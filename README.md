@@ -5,8 +5,10 @@ The initial dog images look like this:
 Pomeranian            |  Australian-shepherd
 :-------------------------:|:-------------------------:
 ![width="200"](https://github.com/Shuyi-bomi/Neural-transfer/blob/main/initial%20picture/pomeranian-900212_1280.jpg)  |  ![](https://github.com/Shuyi-bomi/Neural-transfer/blob/main/initial%20picture/australian-shepherd-3237735_1280.jpg)
-![alt-text-1](https://github.com/Shuyi-bomi/Neural-transfer/blob/main/initial%20picture/pomeranian-900212_1280.jpg "title-1") ![alt-text-2](https://github.com/Shuyi-bomi/Neural-transfer/blob/main/initial%20picture/australian-shepherd-3237735_1280.jpg "title-2")
-
+<p float="center">
+  <img src="https://github.com/Shuyi-bomi/Neural-transfer/blob/main/initial%20picture/pomeranian-900212_1280.jpg" width="60" />
+  <img src="https://github.com/Shuyi-bomi/Neural-transfer/blob/main/initial%20picture/australian-shepherd-3237735_1280.jpg" width="100" /> 
+</p>
 ##Detection
 We set hyperparameter upsample\_num\_times =0 in detector after tuning. We then draw bounding box after obtaining coordinate of dog's face in both images. Here are the results:
 <p float="center">
