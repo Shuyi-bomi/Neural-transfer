@@ -8,11 +8,9 @@ Pomeranian            |  Australian-shepherd
 
 ##Detection
 We set hyperparameter upsample\_num\_times =0 in detector after tuning. We then draw bounding box after obtaining coordinate of dog's face in both images. Here are the results:
-<p float="left">
-  <img src="https://github.com/Shuyi-bomi/Neural-transfer/blob/main/result/1imgde.png
-https://github.com/Shuyi-bomi/Neural-transfer/blob/main/result/1imgde2.png" width="100" />
-  <img src="https://github.com/Shuyi-bomi/Neural-transfer/blob/main/result/1imgde.png
-https://github.com/Shuyi-bomi/Neural-transfer/blob/main/result/1imgde2.png" width="100" /> 
+<p float="center">
+  <img src="https://github.com/Shuyi-bomi/Neural-transfer/blob/main/result/1imgde.png width="100" />
+  <img src="https://github.com/Shuyi-bomi/Neural-transfer/blob/main/result/1imgde2.png" width="100" /> 
 </p>
 
 
