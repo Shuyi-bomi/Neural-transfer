@@ -3,7 +3,7 @@
 """
 Created on Fri Apr  3 15:02:26 2020
 project apm598
-@author: apple
+@author: Shuyi Li
 """
 from __future__ import print_function
 
@@ -12,105 +12,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 import numpy as np
-
-from PIL import Image
-#from matplotlib import pyplot
 import matplotlib.pyplot as plt
-
 import torchvision.transforms as transforms
 import torchvision.models as models
-
 import copy
-import dlib
-import cv2
-import os
-from imutils import face_utils
 
-
-detector = dlib.cnn_face_detection_model_v1('dogHeadDetector.dat')
-
-def loadim(path):
-    img = cv2.imread(path)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    return img
-img = loadim('pomeranian-900212_1280.jpg')
-img2 = loadim('australian-shepherd-3237735_1280.jpg')
-#img2 = cv2.resize(img2, dsize=(902,1280), fx=0.5, fy=0.5)
-
-#filename, ext = os.path.splitext(os.path.basename(img_path1))
-
-fig, axes = plt.subplots(nrows=1, ncols=2)
-fig.set_size_inches(5, 5)
-axes[0].imshow(img)
-axes[1].imshow(img2)
-
-# detection 
-# 0 indicates #of upsample,make everything bigger and allow us to detect more faces
-dets = detector(img, upsample_num_times=0)
-dets2 = detector(img2, upsample_num_times=0)
-
-print(dets2)
-
-img_result = img.copy()
-img_result2 = img2.copy()
-
-
-def plotdet(dets,img_result,loc=[]):
-    
-    for i, d in enumerate(dets):
-        #print("Detection {}: Left: {} Top: {} Right: {} Bottom: {} Confidence: {}".format(i, d.rect.left(), d.rect.top(), d.rect.right(), d.rect.bottom(), d.confidence))
-        loc.append(d.rect.left())
-        loc.append(d.rect.top())
-        loc.append(d.rect.right())
-        loc.append(d.rect.bottom())
-        x1, y1 = d.rect.left(), d.rect.top()
-        x2, y2 = d.rect.right(), d.rect.bottom()
-        cv2.rectangle(img_result, pt1=(x1, y1), pt2=(x2, y2), thickness=2, color=(255,0,0), lineType=cv2.LINE_AA)
-        return img_result,loc
-img_result,loc = plotdet(dets, img_result, loc=[]) 
-img_result2,loc2 = plotdet(dets2, img_result2, loc=[]) 
-
-
-# fig=plt.figure(figsize=(5, 5))
-# plt.imshow(img_result2) 
-# fig.savefig('imgde.png', dpi=200, bbox_inches="tight")
-
-
-#if you see the rectangular not complete , comment/delete it (latex add)
-fig, axes = plt.subplots(nrows=1, ncols=2)
-fig.set_size_inches(5, 5)
-axes[0].imshow(img_result)
-axes[1].imshow(img_result2)
-
-
-loc = np.array(loc).reshape((-1,4)) 
-loc2 = np.array(loc2).reshape((-1,4)) 
-
-    
-def crop_faces(im, size, loc):
-  """ Returns cropped faces from an image """
-  faces = []
-  locations = loc
-  for location in locations:
-    y1, x1, y2, x2 = location
-    x1, x2 = sorted([x1, x2])
-    y1, y2 = sorted([y1, y2])
-    #if img.shape[0]>img.shape[1]:
-    im_cropped = im[x1:x2, y1:y2]
-    im_cropped_resized = cv2.resize(im_cropped, dsize=size)
-    faces.append(im_cropped_resized)
-  return faces
-imac = crop_faces(img, (256,256), loc)[0]
-imac2 = crop_faces(img2, (256,256), loc2)[0]
-
-fig, axes = plt.subplots(nrows=1, ncols=2)
-fig.set_size_inches(8, 8)
-axes[0].imshow(imac)
-axes[1].imshow(imac2)
-
-#fig=plt.figure(figsize=(5, 5))
-#plt.imshow(img_result2) 
-#fig.savefig('imgcrop.jpg', dpi=200, bbox_inches="tight")
 
 
 #style/content transfer
@@ -334,42 +240,6 @@ torch.manual_seed(1)
 outputct = run_style_transfer(cnn, cnn_normalization_mean, cnn_normalization_std,
                             content_img, style_img, input_img, num_steps=hyperP['num_steps'],
                             style_weight=hyperP['style_weight'], content_weight=hyperP['content_weight'],st='F' )
-
-#plot
-def preprocess(tensor):
-    image = tensor.cpu().clone()
-    image = image.squeeze(0) 
-    image = unloader(image)
-    return image
-outputst = preprocess(outputst)
-outputct = preprocess(outputct)
-fig, axes = plt.subplots(nrows=1, ncols=2)
-fig.set_size_inches(4, 4)
-axes[0].imshow(outputst)
-axes[0].set_title("Style Transfer")
-axes[1].imshow(outputct)
-axes[1].set_title("Content Transfer")
-
-plt.ioff()
-plt.show()
-
-
-# plot loss
-fig, axes = plt.subplots(nrows=1, ncols=2)
-fig.set_size_inches(8, 4)
-axes[0].plot(np.arange(320),losspro[:320,0],'--',label='Content Loss')
-axes[0].plot(np.arange(320),losspro[:320,1],'-.',label='Style Loss')
-axes[0].plot(np.arange(320),losspro[:320,2],':',label='Total Loss')
-axes[0].set_title("Style Transfer")
-axes[0].legend()
-axes[1].plot(np.arange(320),losspro[:320,3],'--',label='Content1 Loss(shepherd)')
-axes[1].plot(np.arange(320),losspro[:320,4],'-.',label='Content2 Loss(pomeranian)')
-axes[1].plot(np.arange(320),losspro[:320,5],':',label='Total Loss')
-axes[1].set_title("Content Transfer")
-axes[1].legend()
-
-
-
 
     
     
