@@ -32,9 +32,10 @@ Neural style transfer is a method which could generate images in the style of an
 ### Neural Content Transfer
 Neural content transfer is similar to style transfer, it's just the mixture of the content(feathers) of 2 images. So basically, we should modify the neural-style algorithm to neural content algorithm in order to record content loss for 2 images.
 
-For both methods, we need to initialize the third image as a exact copy of content image and do backpropogation on the third image.
+For both methods, we need to initialize the third image as a exact copy of content image and do backpropogation on the third image. 
+Here are the results for style transfer and content transfer. Fot style transfer, we set weight=1 for content loss and 1000000 for style loss; for content transfer we set weight=1 for content loss and 1.5 for style loss. We extract different conv layers of VGG19-Network to obtain style and content loss.
 
 <p align="middle">
-  <img src=https://github.com/Shuyi-bomi/Neural-transfer/blob/main/result/3finalcompare.jpg width="200" />
+  <img src=https://github.com/Shuyi-bomi/Neural-transfer/blob/main/result/3finalcompare.jpg width="400" />
 </p>
 
