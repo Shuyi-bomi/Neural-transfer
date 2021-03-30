@@ -144,7 +144,7 @@ def get_style_model_and_losses(cnn, normalization_mean, normalization_std,
 
         if name in style_layers:
             target_feature = model(style_img).detach()
-            # For content loss, define both loss as content loss
+            # For content neural tranfer, use content loss to represent style loss(case when len(style_layer=1)
             if len(style_layers)>1:
                 style_loss = StyleLoss(target_feature)
             else:
